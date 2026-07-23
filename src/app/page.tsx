@@ -1,6 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
+
+import { SparklesCore } from '@/components/ui/sparkles';
+
 const chessPieces = ['♔', '♕', '♖', '♗', '♘', '♙'];
 const goPieces = ['⚫', '⚪'];
 
@@ -98,31 +101,55 @@ export default function HomePage() {
         initial="hidden"
         animate="visible"
       >
-        {/* Logo / Badge */}
+        {/* Badge */}
         <motion.div variants={itemVariants} className="mb-8">
           <motion.div
             className="inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-500/10 px-4 py-1.5 text-sm text-indigo-300 backdrop-blur-sm"
-            animate={{ borderColor: ['rgba(129,140,248,0.2)', 'rgba(129,140,248,0.4)', 'rgba(129,140,248,0.2)'] }}
+            animate={{
+              borderColor: [
+                'rgba(129,140,248,0.2)',
+                'rgba(129,140,248,0.4)',
+                'rgba(129,140,248,0.2)',
+              ],
+            }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-indigo-400 animate-pulse" />
+            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-indigo-400" />
             Under development
           </motion.div>
         </motion.div>
 
-        {/* Title */}
-        <motion.h1
-          variants={itemVariants}
-          className="mb-4 text-5xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl"
-        >
-          <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-            Willy&apos;s
-          </span>
-          <br />
-          <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
-            Academy
-          </span>
-        </motion.h1>
+        {/* Title with Sparkles */}
+        <motion.div variants={itemVariants} className="mb-2 flex flex-col items-center">
+          <h1 className="relative z-20 text-5xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl">
+            <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+              Willy&apos;s
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
+              Academy
+            </span>
+          </h1>
+
+          {/* Sparkles + gradient lines under the title */}
+          <div className="relative h-32 w-[20rem] sm:w-[32rem] lg:w-[40rem]">
+            <div className="absolute inset-x-20 top-0 h-[2px] w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
+            <div className="absolute inset-x-20 top-0 h-px w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
+            <div className="absolute inset-x-60 top-0 h-[5px] w-1/4 bg-gradient-to-r from-transparent via-violet-500 to-transparent blur-sm" />
+            <div className="absolute inset-x-60 top-0 h-px w-1/4 bg-gradient-to-r from-transparent via-violet-500 to-transparent" />
+
+            <SparklesCore
+              background="transparent"
+              minSize={0.4}
+              maxSize={1.4}
+              particleDensity={1200}
+              className="h-full w-full"
+              particleColor="#FFFFFF"
+            />
+
+            <div className="absolute inset-0 h-full w-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]" />
+          </div>
+        </motion.div>
 
         {/* Subtitle */}
         <motion.p
@@ -159,7 +186,7 @@ export default function HomePage() {
         {/* Features preview */}
         <motion.div
           variants={itemVariants}
-          className="mt-20 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3"
+          className="mt-6 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3"
         >
           {[
             { icon: '🧠', title: 'AI Analysis', desc: 'Deep game insights powered by AI' },
