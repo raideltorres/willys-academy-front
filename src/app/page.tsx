@@ -121,9 +121,9 @@ export default function HomePage() {
 
         {/* Title with Sparkles */}
         <motion.div variants={itemVariants} className="mb-2 flex flex-col items-center">
-          <h1 className="relative flex gap-4 z-20 text-5xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl">
+          <h1 className="relative z-20 text-4xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl">
             <span className="bg-linear-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-              Willy&apos;s
+              Willy&apos;s{' '}
             </span>
             <span className="bg-linear-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
               Academy
@@ -131,18 +131,18 @@ export default function HomePage() {
           </h1>
 
           {/* Sparkles + gradient lines under the title */}
-          <div className="relative h-32 w-80 sm:w-lg lg:w-160">
-            <div className="absolute inset-x-20 top-0 h-0.5 w-3/4 bg-linear-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
-            <div className="absolute inset-x-20 top-0 h-px w-3/4 bg-linear-to-r from-transparent via-indigo-500 to-transparent" />
-            <div className="absolute inset-x-60 top-0 h-1.25 w-1/4 bg-linear-to-r from-transparent via-violet-500 to-transparent blur-sm" />
-            <div className="absolute inset-x-60 top-0 h-px w-1/4 bg-linear-to-r from-transparent via-violet-500 to-transparent" />
+          <div className="relative h-20 w-full max-w-xs sm:h-28 sm:max-w-lg lg:h-32 lg:max-w-160">
+            <div className="absolute inset-x-8 top-0 h-0.5 w-3/4 bg-linear-to-r from-transparent via-indigo-500 to-transparent blur-sm sm:inset-x-20" />
+            <div className="absolute inset-x-8 top-0 h-px w-3/4 bg-linear-to-r from-transparent via-indigo-500 to-transparent sm:inset-x-20" />
+            <div className="absolute inset-x-20 top-0 h-1.25 w-1/4 bg-linear-to-r from-transparent via-violet-500 to-transparent blur-sm sm:inset-x-60" />
+            <div className="absolute inset-x-20 top-0 h-px w-1/4 bg-linear-to-r from-transparent via-violet-500 to-transparent sm:inset-x-60" />
 
-            <div className="h-full w-full mask-[radial-gradient(350px_200px_at_top,white_20%,transparent)]">
+            <div className="h-full w-full mask-[radial-gradient(200px_120px_at_top,white_20%,transparent)] sm:mask-[radial-gradient(350px_200px_at_top,white_20%,transparent)]">
               <SparklesCore
                 background="transparent"
-                minSize={0.4}
-                maxSize={1.4}
-                particleDensity={1200}
+                minSize={0.3}
+                maxSize={1}
+                particleDensity={800}
                 className="h-full w-full"
                 particleColor="#FFFFFF"
               />
