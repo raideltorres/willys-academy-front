@@ -227,23 +227,6 @@ export default function HomePage() {
           </div>
         </motion.div>
 
-        {/* CTA */}
-        <motion.div variants={itemVariants}>
-          <motion.button
-            className="group relative overflow-hidden rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-shadow hover:shadow-xl hover:shadow-indigo-500/30"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <span className="relative z-10">Get Notified at Launch</span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-violet-500 to-indigo-500"
-              initial={{ x: '100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.button>
-        </motion.div>
-
         {/* Features preview */}
         <motion.div
           variants={itemVariants}
