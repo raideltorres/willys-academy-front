@@ -69,7 +69,7 @@ const itemVariants = {
 
 export default function HomePage() {
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
+    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950">
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-indigo-600/10 blur-[128px]" />
@@ -121,43 +121,41 @@ export default function HomePage() {
 
         {/* Title with Sparkles */}
         <motion.div variants={itemVariants} className="mb-2 flex flex-col items-center">
-          <h1 className="relative z-20 text-5xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl">
-            <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+          <h1 className="relative flex gap-4 z-20 text-5xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl">
+            <span className="bg-linear-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
               Willy&apos;s
             </span>
-            <br />
-            <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
               Academy
             </span>
           </h1>
 
           {/* Sparkles + gradient lines under the title */}
-          <div className="relative h-32 w-[20rem] sm:w-[32rem] lg:w-[40rem]">
-            <div className="absolute inset-x-20 top-0 h-[2px] w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
-            <div className="absolute inset-x-20 top-0 h-px w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
-            <div className="absolute inset-x-60 top-0 h-[5px] w-1/4 bg-gradient-to-r from-transparent via-violet-500 to-transparent blur-sm" />
-            <div className="absolute inset-x-60 top-0 h-px w-1/4 bg-gradient-to-r from-transparent via-violet-500 to-transparent" />
+          <div className="relative h-32 w-80 sm:w-lg lg:w-160">
+            <div className="absolute inset-x-20 top-0 h-0.5 w-3/4 bg-linear-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
+            <div className="absolute inset-x-20 top-0 h-px w-3/4 bg-linear-to-r from-transparent via-indigo-500 to-transparent" />
+            <div className="absolute inset-x-60 top-0 h-1.25 w-1/4 bg-linear-to-r from-transparent via-violet-500 to-transparent blur-sm" />
+            <div className="absolute inset-x-60 top-0 h-px w-1/4 bg-linear-to-r from-transparent via-violet-500 to-transparent" />
 
-            <SparklesCore
-              background="transparent"
-              minSize={0.4}
-              maxSize={1.4}
-              particleDensity={1200}
-              className="h-full w-full"
-              particleColor="#FFFFFF"
-            />
-
-            <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]" />
+            <div className="h-full w-full mask-[radial-gradient(350px_200px_at_top,white_20%,transparent)]">
+              <SparklesCore
+                background="transparent"
+                minSize={0.4}
+                maxSize={1.4}
+                particleDensity={1200}
+                className="h-full w-full"
+                particleColor="#FFFFFF"
+              />
+            </div>
           </div>
         </motion.div>
 
         {/* Subtitle */}
         <motion.p
           variants={itemVariants}
-          className="mb-12 max-w-lg text-lg text-slate-400 sm:text-xl"
+          className="mb-12 mt-8 max-w-lg text-lg text-slate-400 sm:text-xl"
         >
-          Master strategic thinking through{' '}
-          <span className="text-slate-200">Chess</span> &{' '}
+          Master strategic thinking through <span className="text-slate-200">Chess</span> &{' '}
           <span className="text-slate-200">Go</span>
           <br />
           <span className="text-indigo-300/80">AI-powered insights for personal growth</span>
@@ -195,7 +193,7 @@ export default function HomePage() {
           ].map((feature) => (
             <motion.div
               key={feature.title}
-              className="rounded-xl border border-white/5 bg-white/[0.02] px-5 py-4 backdrop-blur-sm"
+              className="rounded-xl border border-white/5 bg-white/2 px-5 py-4 backdrop-blur-sm"
               whileHover={{ borderColor: 'rgba(255,255,255,0.1)', y: -2 }}
             >
               <div className="mb-2 text-2xl">{feature.icon}</div>
