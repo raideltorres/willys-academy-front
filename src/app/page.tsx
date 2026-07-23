@@ -1,8 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-
 const chessPieces = ['♔', '♕', '♖', '♗', '♘', '♙'];
 const goPieces = ['⚫', '⚪'];
 
@@ -40,57 +38,6 @@ function FloatingPiece({
   );
 }
 
-function useCountdown(targetDate: Date) {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
-  useEffect(() => {
-    const tick = () => {
-      const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
-
-      if (distance < 0) {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
-      });
-    };
-
-    tick();
-    const interval = setInterval(tick, 1000);
-    return () => clearInterval(interval);
-  }, [targetDate]);
-
-  return timeLeft;
-}
-
-function CountdownUnit({ value, label }: { value: number; label: string }) {
-  return (
-    <div className="flex flex-col items-center">
-      <motion.div
-        className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5 font-mono text-2xl font-bold text-white backdrop-blur-sm sm:h-20 sm:w-20 sm:text-3xl"
-        key={value}
-        initial={{ rotateX: -90, opacity: 0 }}
-        animate={{ rotateX: 0, opacity: 1 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-      >
-        {String(value).padStart(2, '0')}
-      </motion.div>
-      <span className="mt-2 text-xs uppercase tracking-widest text-slate-400">{label}</span>
-    </div>
-  );
-}
-
 const floatingPieces = [...chessPieces, ...goPieces, ...chessPieces.slice(0, 4)].map(
   (piece, i) => ({
     piece,
@@ -117,11 +64,7 @@ const itemVariants = {
   },
 };
 
-const launchDate = new Date('2026-10-01T00:00:00');
-
 export default function HomePage() {
-  const countdown = useCountdown(launchDate);
-
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
       {/* Ambient glow */}
@@ -211,20 +154,6 @@ export default function HomePage() {
             <span className="text-3xl transition-transform group-hover:scale-110">⚫</span>
             <span className="mt-1 text-xs text-slate-400 group-hover:text-violet-300">Go</span>
           </motion.div>
-        </motion.div>
-
-        {/* Countdown */}
-        <motion.div variants={itemVariants} className="mb-14">
-          <p className="mb-5 text-sm uppercase tracking-widest text-slate-500">Launching in</p>
-          <div className="flex gap-3 sm:gap-5">
-            <CountdownUnit value={countdown.days} label="Days" />
-            <div className="flex items-center pb-6 text-xl text-slate-600">:</div>
-            <CountdownUnit value={countdown.hours} label="Hours" />
-            <div className="flex items-center pb-6 text-xl text-slate-600">:</div>
-            <CountdownUnit value={countdown.minutes} label="Min" />
-            <div className="flex items-center pb-6 text-xl text-slate-600">:</div>
-            <CountdownUnit value={countdown.seconds} label="Sec" />
-          </div>
         </motion.div>
 
         {/* Features preview */}
