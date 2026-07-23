@@ -147,7 +147,7 @@ export default function HomePage() {
               particleColor="#FFFFFF"
             />
 
-            <div className="absolute inset-0 h-full w-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]" />
+            <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]" />
           </div>
         </motion.div>
 
