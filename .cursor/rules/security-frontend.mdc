@@ -1,0 +1,39 @@
+---
+description: Frontend security practices — token storage, XSS prevention, input validation
+alwaysApply: true
+---
+
+# Frontend Security
+
+## Token Storage
+
+- Never store access tokens or refresh tokens in `localStorage` or `sessionStorage`
+- Use HTTP-only cookies (set by API) for refresh tokens
+- Access tokens may be held in memory (Redux state or closure) — they are short-lived
+- On page reload, re-authenticate via refresh token cookie
+
+## XSS Prevention
+
+- Never use `dangerouslySetInnerHTML` unless:
+  1. The content is admin-authored (not user-generated)
+  2. It is sanitized with DOMPurify before rendering
+  3. The usage is explicitly commented with justification
+- Sanitize any user-generated content before rendering
+- Use React's built-in JSX escaping for all dynamic values
+
+## Input Validation
+
+- Validate all form inputs client-side with Zod before submission
+- Validation schemas should match the API's expected DTOs
+- Show validation errors inline, not as alerts
+
+## API Calls
+
+- All API calls go through RTK Query — no raw `fetch()` or `axios` calls
+- Never embed API keys, secrets, or sensitive config in client-side code
+- Environment variables exposed to the client must use `NEXT_PUBLIC_` prefix — never expose server secrets
+
+## CSRF
+
+- When using cookie-based auth, include CSRF tokens in state-changing requests
+- RTK Query's `baseQuery` should handle CSRF token injection

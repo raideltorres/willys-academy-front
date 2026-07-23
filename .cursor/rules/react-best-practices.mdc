@@ -1,0 +1,49 @@
+---
+description: React patterns, memoization, hooks, and performance guidelines
+globs: "**/*.{tsx,ts}"
+alwaysApply: false
+---
+
+# React Best Practices
+
+## Memoization
+
+- Use `React.memo()` when a component receives stable props in a frequently re-rendered parent tree
+- Use `useMemo` for expensive computations (array filtering, sorting, aggregation)
+- Use `useCallback` for callbacks passed as props to `React.memo()` children
+- Do NOT memoize blindly — only when there is a structural or measurable reason
+- Never pass inline object/array literals as props to memoized components
+
+```tsx
+// BAD — inline object defeats React.memo on Child
+<Child style={{ color: 'red' }} />
+
+// GOOD
+const style = useMemo(() => ({ color: 'red' }), []);
+<Child style={style} />
+```
+
+## Hooks
+
+- Extract reusable logic into custom hooks named `use[Feature]` (e.g., `useChessGame`, `useAuth`)
+- Never use `useEffect` for derived state — compute during render
+- Prefer `useMemo` over `useEffect` + `setState` for computed values
+- Keep `useEffect` dependencies minimal and explicit — no `// eslint-disable-next-line`
+
+```tsx
+// BAD
+const [fullName, setFullName] = useState('');
+useEffect(() => { setFullName(`${first} ${last}`); }, [first, last]);
+
+// GOOD
+const fullName = `${first} ${last}`;
+```
+
+## Component Patterns
+
+- Prefer composition over prop drilling — use children, render props, or context
+- Keep components focused — if a component handles more than one concern, split it
+- Colocate related files (component, test, styles) in the same directory
+- Use named exports, not default exports
+- No `any` — strict TypeScript everywhere
+- Prefer `interface` for component props, `type` for unions and utility types

@@ -1,0 +1,44 @@
+---
+description: Atomic design component architecture — enforces atoms, molecules, organisms, templates, pages hierarchy
+globs: src/components/**/*.{tsx,ts}
+alwaysApply: false
+---
+
+# Atomic Design
+
+All UI components follow atomic design. Place components in the correct level:
+
+```
+src/components/
+├── atoms/          Pure primitives. No business logic, no state, no API calls.
+├── molecules/      Combine 2-3 atoms. Minimal local state (e.g., controlled input).
+├── organisms/      Complex sections. May connect to Redux. May fetch data.
+├── templates/      Page layouts. Slot composition via children/props. No data fetching.
+```
+
+Pages live in `src/app/` (Next.js App Router routes).
+
+## Directory Convention
+
+Every component in its own directory:
+
+```
+atoms/Button/
+├── index.tsx
+└── Button.test.tsx
+```
+
+## Classification Rules
+
+- **Atom**: renders a single HTML element or wraps one primitive (Button, Input, Label, Icon, Badge, Spinner). Zero props that carry domain meaning.
+- **Molecule**: combines 2-3 atoms into a small reusable unit (FormField, SearchBar, NavItem). May have local state for UI behavior (focus, hover). No Redux, no API calls.
+- **Organism**: domain-aware section (Header, GameBoard, CourseCard, EvaluationPanel). May use `useAppSelector`, `useAppDispatch`, or RTK Query hooks.
+- **Template**: pure layout (DashboardTemplate, AuthTemplate). Accepts `children` or named slots. Never fetches data.
+
+## Rules
+
+- Never put business logic in atoms
+- Never use atoms directly in page files — compose through molecules/organisms
+- Never connect atoms or molecules to Redux
+- When in doubt, start at the simpler level and promote when complexity grows
+- Export components as named exports from `index.tsx`

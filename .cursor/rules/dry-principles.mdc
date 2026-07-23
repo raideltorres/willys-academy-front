@@ -1,0 +1,31 @@
+---
+description: DRY principles and code reuse guidelines for the web app
+alwaysApply: true
+---
+
+# DRY Principles — Web
+
+## Extract, Don't Copy
+
+- If the same logic appears in 2+ places, extract it into a utility, hook, or component
+- Shared validation schemas live in `src/schemas/`
+- Shared types in `src/types/api/` (generated from OpenAPI) and `src/types/client/` (client-only)
+- Shared utilities in `src/lib/`
+
+## Custom Hooks
+
+- Extract reusable stateful logic into hooks: `src/hooks/use[Feature].ts`
+- Hooks that wrap RTK Query with extra logic (error handling, transforms) belong here
+- Name convention: `useAuth`, `useChessGame`, `useOnboarding`
+
+## Component Reuse
+
+- Before creating a new component, check if an existing atom/molecule can be composed
+- Extract repeated layout patterns into templates
+- Use composition (children, render props) over creating near-identical components with slight differences
+
+## Do NOT Over-Abstract
+
+- If something is used only once, inline it — premature abstraction is worse than duplication
+- A helper function used in one file can stay in that file until it is needed elsewhere
+- Do not create "utils" files with 20 unrelated functions — group by domain

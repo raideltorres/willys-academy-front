@@ -1,0 +1,60 @@
+---
+description: Redux Toolkit and RTK Query patterns — state management conventions
+globs: src/store/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Redux Toolkit + RTK Query
+
+## Architecture
+
+```
+src/store/
+├── store.ts              Store configuration (configureStore)
+├── hooks.ts              Typed useAppSelector, useAppDispatch
+├── api/
+│   ├── baseApi.ts        createApi with baseQuery, auth headers, tags
+│   ├── authApi.ts        injectEndpoints for auth module
+│   ├── coursesApi.ts     injectEndpoints for courses module
+│   └── chessApi.ts       injectEndpoints for chess module
+└── slices/
+    ├── uiSlice.ts        Sidebar, modals, theme
+    └── chessBoardSlice.ts Game board local state
+```
+
+## Rules
+
+- **RTK Query for ALL server state.** Never store API-fetched data in Redux slices.
+- **Redux slices only for complex client-only state** (game board, UI state machines, multi-step onboarding forms).
+- Use `baseApi.injectEndpoints()` to split API definitions per module.
+- Use **tags** for cache invalidation — never call `refetch()` manually unless there is no tag-based alternative.
+- Use `createSelector` for derived state — never compute inside `useAppSelector`.
+- Use `PayloadAction<T>` for typed action payloads in slices.
+
+## API Service Pattern
+
+```typescript
+// src/store/api/authApi.ts
+import { baseApi } from './baseApi';
+
+export const authApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    login: builder.mutation<LoginResponse, LoginRequest>({
+      query: (body) => ({ url: '/auth/login', method: 'POST', body }),
+      invalidatesTags: ['User'],
+    }),
+    getMe: builder.query<UserResponse, void>({
+      query: () => '/users/me',
+      providesTags: ['User'],
+    }),
+  }),
+});
+
+export const { useLoginMutation, useGetMeQuery } = authApi;
+```
+
+## Anti-patterns
+
+- Never import `useDispatch` or `useSelector` directly — use typed `useAppDispatch` and `useAppSelector` from `hooks.ts`
+- Never store tokens in Redux state — use HTTP-only cookies or secure memory
+- Never duplicate server data in slices — if it comes from the API, it belongs in RTK Query cache
