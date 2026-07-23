@@ -4,14 +4,15 @@ import './globals.css';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-  title: "Willy's Academy",
-  description: 'Learn, play, and grow through Chess and Go',
+  title: "Willy's Academy — Learn Through Chess & Go",
+  description:
+    'Master strategic thinking through Chess and Go with AI-powered insights for personal growth.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
-      <body className="min-h-screen bg-white text-gray-900 antialiased">
+    <html lang="es" className="dark">
+      <body className="min-h-screen bg-slate-950 text-white antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>
