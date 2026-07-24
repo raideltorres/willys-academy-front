@@ -1,8 +1,11 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 import { SparklesCore } from '@/components/ui/sparkles';
+import { useSessionRestore } from '@/hooks/useSessionRestore';
 
 const chessPieces = ['♔', '♕', '♖', '♗', '♘', '♙'];
 const goPieces = ['⚫', '⚪'];
@@ -68,6 +71,8 @@ const itemVariants = {
 };
 
 export default function HomePage() {
+  const { isAuthenticated } = useSessionRestore();
+
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950">
       {/* Ambient glow */}
@@ -94,6 +99,58 @@ export default function HomePage() {
         }}
       />
 
+      {/* Top nav */}
+      <motion.nav
+        className="absolute top-0 z-20 flex w-full items-center justify-between px-6 py-4 sm:px-10"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.6 }}
+      >
+        <Link href="/" className="flex items-center gap-2">
+          <Image src="/logo.png" alt="Logo" width={32} height={32} className="rounded-md" />
+          <span className="text-sm font-semibold text-slate-300">Willy&apos;s Academy</span>
+        </Link>
+        <div className="flex items-center gap-3">
+          {isAuthenticated ? (
+            <>
+              <Link
+                href="/games"
+                className="text-sm text-slate-400 transition-colors hover:text-slate-200"
+              >
+                My Games
+              </Link>
+              <Link
+                href="/play"
+                className="rounded-lg bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-indigo-500"
+              >
+                Play
+              </Link>
+              <Link
+                href="/dashboard"
+                className="text-sm text-slate-400 transition-colors hover:text-slate-200"
+              >
+                Dashboard
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                className="text-sm text-slate-400 transition-colors hover:text-slate-200"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/auth/register"
+                className="rounded-lg bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-indigo-500"
+              >
+                Get Started
+              </Link>
+            </>
+          )}
+        </div>
+      </motion.nav>
+
       {/* Content */}
       <motion.div
         className="relative z-10 flex flex-col items-center px-6 text-center"
@@ -114,8 +171,8 @@ export default function HomePage() {
             }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-indigo-400" />
-            Under development
+            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-green-400" />
+            Chess is live — play now!
           </motion.div>
         </motion.div>
 
@@ -162,23 +219,33 @@ export default function HomePage() {
         </motion.p>
 
         {/* Game icons */}
-        <motion.div variants={itemVariants} className="mb-14 flex gap-6">
+        <motion.div variants={itemVariants} className="mb-8 flex gap-6">
           <motion.div
-            className="group flex h-20 w-20 flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-colors hover:border-indigo-400/30 hover:bg-indigo-500/10"
+            className="group flex h-20 w-20 flex-col items-center justify-center rounded-2xl border border-indigo-400/20 bg-indigo-500/10 backdrop-blur-sm"
             whileHover={{ scale: 1.08, y: -4 }}
             whileTap={{ scale: 0.95 }}
           >
             <span className="text-3xl transition-transform group-hover:scale-110">♔</span>
-            <span className="mt-1 text-xs text-slate-400 group-hover:text-indigo-300">Chess</span>
+            <span className="mt-1 text-xs text-indigo-300">Chess</span>
           </motion.div>
           <motion.div
-            className="group flex h-20 w-20 flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-colors hover:border-violet-400/30 hover:bg-violet-500/10"
-            whileHover={{ scale: 1.08, y: -4 }}
-            whileTap={{ scale: 0.95 }}
+            className="group flex h-20 w-20 flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 opacity-40 backdrop-blur-sm"
+            whileHover={{ scale: 1.02 }}
           >
-            <span className="text-3xl transition-transform group-hover:scale-110">⚫</span>
-            <span className="mt-1 text-xs text-slate-400 group-hover:text-violet-300">Go</span>
+            <span className="text-3xl">⚫</span>
+            <span className="mt-1 text-xs text-slate-500">Go — Soon</span>
           </motion.div>
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div variants={itemVariants} className="mb-14">
+          <Link
+            href={isAuthenticated ? '/play' : '/auth/register'}
+            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-8 py-3 text-base font-medium text-white shadow-lg shadow-indigo-500/25 transition-all hover:bg-indigo-500 hover:shadow-indigo-500/40"
+          >
+            {isAuthenticated ? 'Play Now' : 'Start Playing'}
+            <span className="text-lg">→</span>
+          </Link>
         </motion.div>
 
         {/* Features preview */}
@@ -211,7 +278,7 @@ export default function HomePage() {
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
       >
-        © 2026 Willy&apos;s Academy — Coming Soon
+        © 2026 Willy&apos;s Academy
       </motion.footer>
     </main>
   );

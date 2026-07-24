@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import { Button } from '@/components/atoms/Button';
+import { Loader } from '@/components/ui/loader';
 import { GameStatusBadge } from '@/components/molecules/GameStatusBadge';
 import { useGetGamesQuery } from '@/store/api/chessApi';
 
@@ -25,8 +26,8 @@ export default function GamesPage() {
         </div>
 
         {isLoading ? (
-          <div className="mt-8 flex justify-center">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-400 border-t-transparent" />
+          <div className="mt-16 flex justify-center">
+            <Loader />
           </div>
         ) : data && data.games.length > 0 ? (
           <div className="mt-8 space-y-3">

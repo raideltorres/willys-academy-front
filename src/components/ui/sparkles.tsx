@@ -1,6 +1,6 @@
 'use client';
 
-import { useId } from 'react';
+import { useCallback, useId } from 'react';
 import { Particles, ParticlesProvider } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 import { cn } from '@/lib/utils';
@@ -104,8 +104,12 @@ function SparklesInner(props: SparklesProps) {
 }
 
 export function SparklesCore(props: SparklesProps) {
+  const particlesInit = useCallback(async (engine: Parameters<typeof loadSlim>[0]) => {
+    await loadSlim(engine);
+  }, []);
+
   return (
-    <ParticlesProvider init={async (engine) => await loadSlim(engine)}>
+    <ParticlesProvider init={particlesInit}>
       <SparklesInner {...props} />
     </ParticlesProvider>
   );

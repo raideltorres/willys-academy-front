@@ -5,6 +5,7 @@ import { Chess } from 'chess.js';
 import type { Square } from 'chess.js';
 import { Chessboard } from 'react-chessboard';
 
+import { Loader } from '@/components/ui/loader';
 import { useAppSelector } from '@/store/hooks';
 import type { ChessGame } from '@/types/chess';
 
@@ -144,9 +145,8 @@ export function ChessBoardComponent({ game, onMove, disabled }: ChessBoardProps)
       />
       {isThinking && (
         <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/20">
-          <div className="flex items-center gap-2 rounded-lg bg-slate-900/90 px-4 py-2">
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-indigo-400 border-t-transparent" />
-            <span className="text-sm text-slate-300">Thinking...</span>
+          <div className="rounded-lg bg-slate-900/90 px-5 py-3">
+            <Loader size="sm" />
           </div>
         </div>
       )}

@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { useCallback } from 'react';
 
 import { Button } from '@/components/atoms/Button';
+import { Loader } from '@/components/ui/loader';
 import { GameStatusBadge } from '@/components/molecules/GameStatusBadge';
 import { ChessBoardComponent } from '@/components/organisms/ChessBoard';
 import { GameControls } from '@/components/organisms/GameControls';
@@ -75,11 +76,7 @@ export default function GamePage() {
   }, [game, triggerExportPgn]);
 
   if (isLoadingGame || !game) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-400 border-t-transparent" />
-      </div>
-    );
+    return <Loader fullScreen />;
   }
 
   const levelLabels: Record<number, string> = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced' };

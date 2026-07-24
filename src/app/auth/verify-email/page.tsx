@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 
+import { Loader } from '@/components/ui/loader';
 import { AuthTemplate } from '@/components/templates/AuthTemplate';
 import { useVerifyEmailMutation } from '@/store/api/authApi';
 
@@ -37,10 +38,7 @@ function VerifyEmailContent() {
     <AuthTemplate>
       <div className="text-center">
         {status === 'loading' && (
-          <>
-            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-indigo-400 border-t-transparent" />
-            <p className="mt-4 text-sm text-slate-400">Verifying your email...</p>
-          </>
+          <Loader />
         )}
         {status === 'success' && (
           <>
