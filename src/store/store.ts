@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { baseApi } from './api/baseApi';
 import authReducer from './slices/authSlice';
+import chessBoardReducer from './slices/chessBoardSlice';
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: authReducer,
+    chessBoard: chessBoardReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
 });
